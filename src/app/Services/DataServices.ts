@@ -2,12 +2,12 @@ import { IForecast } from "../Interfaces/Interfaces";
 
 
 export const GetMaxMin = (data: IForecast) => {
-  let compareDay: Date = new Date();
-  let compareDay2: Date = new Date(compareDay.getTime() + 86400000);
-  let compareDay3: Date = new Date(compareDay.getTime() + 86400000 * 2);
-  let compareDay4: Date = new Date(compareDay.getTime() + 86400000 * 3);
-  let compareDay5: Date = new Date(compareDay.getTime() + 86400000 * 4);
-  let compareDay6: Date = new Date(compareDay.getTime() + 86400000 * 5);
+  const compareDay:  Date = new Date();
+  const compareDay2: Date = new Date(compareDay.getTime() + 86400000);
+  const compareDay3: Date = new Date(compareDay.getTime() + 86400000 * 2);
+  const compareDay4: Date = new Date(compareDay.getTime() + 86400000 * 3);
+  const compareDay5: Date = new Date(compareDay.getTime() + 86400000 * 4);
+  const compareDay6: Date = new Date(compareDay.getTime() + 86400000 * 5);
 
   //Max Arrays
   let day1MaxArr: number[] = [];
