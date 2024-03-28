@@ -97,5 +97,5 @@ export const GetMaxMin = (data: IForecast) => {
   const DayFiveMax = Math.floor(Math.max(...day6MinArr))
   const DayFiveMin = Math.floor(Math.min(...day6MinArr))
 
-  return {StatusDay1, StatusDay2, StatusDay3, StatusDay4, StatusDay5, currentMax, currentMin, DayOneMax, DayOneMin, DayTwoMax, DayTwoMin, DayThreeMax, DayThreeMin,  DayFourMax, DayFourMin, DayFiveMax, DayFiveMin, }
+  return {compareDay2, compareDay3, compareDay4, compareDay5, compareDay6, StatusDay1, StatusDay2, StatusDay3, StatusDay4, StatusDay5, currentMax, currentMin, DayOneMax, DayOneMin, DayTwoMax, DayTwoMin, DayThreeMax, DayThreeMin,  DayFourMax, DayFourMin, DayFiveMax, DayFiveMin, }
 };
