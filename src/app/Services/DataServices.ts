@@ -1,7 +1,5 @@
 import { ICityGet, IForecast } from "../Interfaces/Interfaces";
-
 let Apikey = process.env.NEXT_PUBLIC_API_KEY;
-console.log(Apikey)
 export const getData = async (longitude: number, latitude: number) => {
   const promise = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${Apikey}&units=imperial&cnt=40`);
   const data: IForecast = await promise.json();
