@@ -37,7 +37,7 @@ export default function Home() {
   const [compareDay4, setCompareDay4] = useState<Date>();
   const [compareDay5, setCompareDay5] = useState<Date>();
   const [compareDay6, setCompareDay6] = useState<Date>();
-  const [date, setdate] = useState<Date>();
+  const [date, setdate] = useState<any>();
 
   const getData = async (longitude: number, latitude: number) => {
     const promise = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${Apikey}&units=imperial&cnt=40`);
