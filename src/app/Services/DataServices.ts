@@ -58,7 +58,7 @@ export const GetMaxMin = (data: IForecast) => {
 
 
   function StatusMode(statusArr: string[]) {
-    const frequency = {};
+    const frequency:any = {};
 
     statusArr.forEach((status) => {
       frequency[status] = (frequency[status] || 0) + 1;
