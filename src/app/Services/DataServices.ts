@@ -1,4 +1,5 @@
 import { ICityGet, IForecast } from "../Interfaces/Interfaces";
+
 let Apikey = process.env.NEXT_PUBLIC_API_KEY;
 console.log(Apikey)
 export const getData = async (longitude: number, latitude: number) => {
