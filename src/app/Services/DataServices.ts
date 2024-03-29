@@ -1,6 +1,5 @@
 import { IForecast } from "../Interfaces/Interfaces";
 
-
 export const GetMaxMin = (data: IForecast) => {
   const compareDay:  Date = new Date();
   const compareDay2: Date = new Date(compareDay.getTime() + 86400000);
@@ -8,7 +7,6 @@ export const GetMaxMin = (data: IForecast) => {
   const compareDay4: Date = new Date(compareDay.getTime() + 86400000 * 3);
   const compareDay5: Date = new Date(compareDay.getTime() + 86400000 * 4);
   const compareDay6: Date = new Date(compareDay.getTime() + 86400000 * 5);
-
   //Max Arrays
   let day1MaxArr: number[] = [];
   let day2MaxArr: number[] = [];
@@ -60,9 +58,9 @@ export const GetMaxMin = (data: IForecast) => {
 
 
   function StatusMode(statusArr: string[]) {
-    const frequency: object = {};
+    const frequency = {};
 
-    statusArr.forEach((status: string) => {
+    statusArr.forEach((status) => {
       frequency[status] = (frequency[status] || 0) + 1;
     });
 

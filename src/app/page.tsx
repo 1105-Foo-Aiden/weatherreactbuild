@@ -1,9 +1,8 @@
 "use client";
-import { ApiKey } from "./Services/APIKey";
+let Apikey = process.env.NEXT_PUBLIC_API_KEY
 
 import NavBarComponent from "./Components/NavBarComponent";
 import Satr from "./Star.png";
-import FilledStar from "./FilledStar.png";
 import { useEffect, useState } from "react";
 import { IForecast } from "./Interfaces/Interfaces";
 import Image from "next/image";
@@ -41,9 +40,7 @@ export default function Home() {
   const [date, setdate] = useState<Date>();
 
   const getData = async (longitude: number, latitude: number) => {
-    const promise = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${ApiKey}&units=imperial&cnt=40`
-    );
+    const promise = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${Apikey}&units=imperial&cnt=40`);
     const data: IForecast = await promise.json();
     return data;
   };
@@ -55,13 +52,7 @@ export default function Home() {
   function success(position: any) {
     setLatitude(position.coords.latitude);
     setLongitude(position.coords.longitude);
-
-    setdate(
-      new Date().toLocaleDateString("default", {
-        day: "numeric",
-        month: "numeric",
-      })
-    );
+    setdate(new Date().toLocaleDateString("default", {day: "numeric", month: "numeric",}));
     setSuccessBool(true);
   }
 
@@ -77,61 +68,13 @@ export default function Home() {
         setCurrentStatus(
           `https://openweathermap.org/img/wn/${weatherData.list[0].weather[0].icon}@2x.png`
         );
-        const {
-          compareDay2,
-          compareDay3,
-          compareDay4,
-          compareDay5,
-          compareDay6,
-          StatusDay1,
-          StatusDay2,
-          StatusDay3,
-          StatusDay4,
-          StatusDay5,
-          currentMax,
-          currentMin,
-          DayOneMax,
-          DayOneMin,
-          DayTwoMax,
-          DayTwoMin,
-          DayThreeMax,
-          DayThreeMin,
-          DayFourMax,
-          DayFourMin,
-          DayFiveMax,
-          DayFiveMin,
-        } = GetMaxMin(weatherData);
+        const { compareDay2, compareDay3, compareDay4, compareDay5, compareDay6, StatusDay1, StatusDay2, StatusDay3, StatusDay4, StatusDay5, currentMax, currentMin, DayOneMax, DayOneMin, DayTwoMax, DayTwoMin, DayThreeMax, DayThreeMin, DayFourMax, DayFourMin, DayFiveMax, DayFiveMin, } = GetMaxMin(weatherData);
         setStatusDay1(`https://openweathermap.org/img/wn/${StatusDay1}@2x.png`),
-          setStatusDay2(
-            `https://openweathermap.org/img/wn/${StatusDay2}@2x.png`
-          ),
-          setStatusDay3(
-            `https://openweathermap.org/img/wn/${StatusDay3}@2x.png`
-          ),
-          setStatusDay4(
-            `https://openweathermap.org/img/wn/${StatusDay4}@2x.png`
-          ),
-          setStatusDay5(
-            `https://openweathermap.org/img/wn/${StatusDay5}@2x.png`
-          );
-        setCurrentDayMax(currentMax),
-          setCurrentDayMin(currentMin),
-          setDayOneMax(DayOneMax),
-          setDayOneMin(DayOneMin),
-          setDayTwoMax(DayTwoMax),
-          setDayTwoMin(DayTwoMin),
-          setDayThreeMax(DayThreeMax),
-          setDayThreeMin(DayThreeMin),
-          setDayFourMax(DayFourMax),
-          setDayFourMin(DayFourMin),
-          setDayFiveMax(DayFiveMax),
-          setDayFiveMin(DayFiveMin);
-        setCompareDay2(compareDay2),
-          setCompareDay3(compareDay3),
-          setCompareDay4(compareDay4),
-          setCompareDay5(compareDay5),
-          setCompareDay6(compareDay6);
-      };
+          setStatusDay2(`https://openweathermap.org/img/wn/${StatusDay2}@2x.png`),
+          setStatusDay3(`https://openweathermap.org/img/wn/${StatusDay3}@2x.png`),
+          setStatusDay4(`https://openweathermap.org/img/wn/${StatusDay4}@2x.png`),
+          setStatusDay5(`https://openweathermap.org/img/wn/${StatusDay5}@2x.png`);
+          setCurrentDayMax(currentMax), setCurrentDayMin(currentMin), setDayOneMax(DayOneMax), setDayOneMin(DayOneMin), setDayTwoMax(DayTwoMax), setDayTwoMin(DayTwoMin), setDayThreeMax(DayThreeMax), setDayThreeMin(DayThreeMin), setDayFourMax(DayFourMax), setDayFourMin(DayFourMin), setDayFiveMax(DayFiveMax), setDayFiveMin(DayFiveMin); setCompareDay2(compareDay2), setCompareDay3(compareDay3), setCompareDay4(compareDay4), setCompareDay5(compareDay5), setCompareDay6(compareDay6); };
       fetchData();
     }
   }, [successBool]);
@@ -151,13 +94,7 @@ export default function Home() {
               {forecastData && forecastData.city.name}
             </h1>
             <p>
-              <Image
-                width={50}
-                height={50}
-                src={Satr.src}
-                alt="favStar"
-                onClick={() => alert()}
-              />
+              <Image width={50} height={50} src={Satr.src} alt="favStar" onClick={() => alert()} />
             </p>
           </div>
           <div className="flex justify-center">
@@ -175,57 +112,24 @@ export default function Home() {
             <p className="text-[60px] flex justify-center">
               {forecastData && Math.round(forecastData.list[0].main.temp)}F/
             </p>
-            <p className="text-[40px] opacity-50 pt-6">
-              {forecastData &&
-                Math.round(((forecastData.list[0].main.temp - 32) * 5) / 9)}
-              C
-            </p>
+            <p className="text-[40px] opacity-50 pt-6">{forecastData && Math.round(((forecastData.list[0].main.temp - 32) * 5) / 9)}C</p>
           </div>
-          <div>
-            <p className="text-[40px]">Hi: {currentDayMax}F/</p>
-            <p className="text-[35px] opacity-50">
-              {currentDayMax && Math.floor(((currentDayMax - 32) * 5) / 9)}C
-            </p>
+          <div className="flex justify-center">
+            <p className="text-[30px]">Hi: {currentDayMax}F/</p>
+            <p className="text-[25px] opacity-50 pt-2">{currentDayMax && Math.floor(((currentDayMax - 32) * 5) / 9)}C</p>
           </div>
-          <div className="flex items-center">
-            <p className="text-[40px]">Lo: {currentDayMin}F/</p>
-            <p className="text-[35px] opacity-50">
-              {currentDayMin && Math.round(((currentDayMin - 32) * 5) / 9)}C
-            </p>
+          <div className="flex justify-center">
+            <p className="text-[30px]">Lo: {currentDayMin}F/</p>
+            <p className="text-[25px] opacity-50 pt-2">{currentDayMin && Math.round(((currentDayMin - 32) * 5) / 9)}C</p>
           </div>
         </div>
       </div>
       <div className="container grid grid-cols-5 pl-10 mt-10">
-        <DayForcastComponent
-          date={compareDay2}
-          Max={DayOneMax}
-          Min={DayOneMin}
-          Status={StatusDay1}
-        />
-        <DayForcastComponent
-          date={compareDay3}
-          Max={DayTwoMax}
-          Min={DayTwoMin}
-          Status={StatusDay2}
-        />
-        <DayForcastComponent
-          date={compareDay4}
-          Max={DayThreeMax}
-          Min={DayThreeMin}
-          Status={StatusDay3}
-        />
-        <DayForcastComponent
-          date={compareDay5}
-          Max={DayFourMax}
-          Min={DayFourMin}
-          Status={StatusDay4}
-        />
-        <DayForcastComponent
-          date={compareDay6}
-          Max={DayFiveMax}
-          Min={DayFiveMin}
-          Status={StatusDay5}
-        />
+        <DayForcastComponent date={compareDay2} Max={DayOneMax} Min={DayOneMin} Status={StatusDay1} />
+        <DayForcastComponent date={compareDay3} Max={DayTwoMax} Min={DayTwoMin} Status={StatusDay2} />
+        <DayForcastComponent date={compareDay4} Max={DayThreeMax} Min={DayThreeMin} Status={StatusDay3} />
+        <DayForcastComponent date={compareDay5} Max={DayFourMax} Min={DayFourMin} Status={StatusDay4} />
+        <DayForcastComponent date={compareDay6} Max={DayFiveMax} Min={DayFiveMin} Status={StatusDay5} />
       </div>
     </>
   );
