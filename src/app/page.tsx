@@ -10,8 +10,8 @@ import favStar from "./FilledStar.png";
 
 
 export default function Home() {
-  const [longitude, setLongitude] = useState<number>(0);
-  const [latitude, setLatitude] = useState<number>(0);
+  const [longitude, setLongitude] = useState<number>(27);
+  const [latitude, setLatitude] = useState<number>(-121);
   const [forecastData, setForecastData] = useState<IForecast>();
   const [successBool, setSuccessBool] = useState<Boolean>(false);
   const [currentDayMax, setCurrentDayMax] = useState<number>();
@@ -37,7 +37,7 @@ export default function Home() {
   const [compareDay4, setCompareDay4] = useState<Date>();
   const [compareDay5, setCompareDay5] = useState<Date>();
   const [compareDay6, setCompareDay6] = useState<Date>();
-  let [searchvalue, setSearchValue] = useState<string>();
+  const [searchvalue, setSearchValue] = useState<string>("");
   const [fav, setFav] = useState<Boolean>();
   const [date, setdate] = useState<any>();
   const [favorites, setFavorites] = useState<string[]>([])
@@ -75,14 +75,21 @@ export default function Home() {
       };
       fetchData();
     }
-  }, [successBool]);
-  const handleSearch = async () => {
-    setLatitude(0);
-    setLongitude(0);
-    const { longitude, latitude } = await GetCity(searchvalue ? searchvalue : "");
-    setLatitude(latitude);
-    setLongitude(longitude);
-  };
+  }, [latitude, longitude]);
+  
+  useEffect(() =>{
+    const GetNewData = async() =>{
+      const { longitude, latitude } = await GetCity(searchCityValue!);
+      setLatitude(latitude);
+      setLongitude(longitude);
+    }
+    GetNewData()
+  }, [searchCityValue])
+
+  const HandleSearchBtn = () =>{
+    setSearchCityValue(searchvalue)
+  }
+
 
   const handleFav = () => {
     setFav(!fav);
@@ -96,11 +103,6 @@ export default function Home() {
     setFavorites(getlocalStorage())
   };
 
-  useEffect(() =>{
-    const GetNewData = async() =>{
-
-    }
-  }, [searchCityValue])
 
   return (
     <>
@@ -111,7 +113,7 @@ export default function Home() {
         </div>
         <div className="gap-4 pr-5 flex justify-end">
           <input type="text" placeholder="Search a City" className="h-10 w-56 text-black" onChange={(e) => setSearchValue(e.target.value)} value={searchvalue} />
-          <button className="w-28 h-10 bg-black" onClick={handleSearch}>
+          <button className="w-28 h-10 bg-black" onClick={(HandleSearchBtn)}>
             Go
           </button>
         </div>
