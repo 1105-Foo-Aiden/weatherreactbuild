@@ -66,7 +66,11 @@ export default function Home() {
         setCurrentStatus(`https://openweathermap.org/img/wn/${weatherData.list[0].weather[0].icon}@2x.png`);
         const {compareDay2, compareDay3, compareDay4, compareDay5, compareDay6, StatusDay1, StatusDay2, StatusDay3, StatusDay4, StatusDay5, currentMax, currentMin, DayOneMax, DayOneMin, DayTwoMax, DayTwoMin, DayThreeMax, DayThreeMin, DayFourMax, DayFourMin, DayFiveMax, DayFiveMin, } = GetMaxMin(weatherData);
         setStatusDay1(`https://openweathermap.org/img/wn/${StatusDay1}@2x.png`),
-        setStatusDay2(`https://openweathermap.org/img/wn/${StatusDay2}@2x.png`), setStatusDay3(`https://openweathermap.org/img/wn/${StatusDay3}@2x.png`), setStatusDay4(`https://openweathermap.org/img/wn/${StatusDay4}@2x.png`), setStatusDay5(`https://openweathermap.org/img/wn/${StatusDay5}@2x.png`), setCurrentDayMax(currentMax), setCurrentDayMin(currentMin), setDayOneMax(DayOneMax), setDayOneMin(DayOneMin), setDayTwoMax(DayTwoMax), setDayTwoMin(DayTwoMin), setDayThreeMax(DayThreeMax),
+        setStatusDay2(`https://openweathermap.org/img/wn/${StatusDay2}@2x.png`), 
+        setStatusDay3(`https://openweathermap.org/img/wn/${StatusDay3}@2x.png`), 
+        setStatusDay4(`https://openweathermap.org/img/wn/${StatusDay4}@2x.png`), 
+        setStatusDay5(`https://openweathermap.org/img/wn/${StatusDay5}@2x.png`), 
+        setCurrentDayMax(currentMax), setCurrentDayMin(currentMin), setDayOneMax(DayOneMax), setDayOneMin(DayOneMin), setDayTwoMax(DayTwoMax), setDayTwoMin(DayTwoMin), setDayThreeMax(DayThreeMax),
         setDayThreeMin(DayThreeMin), setDayFourMax(DayFourMax), setDayFourMin(DayFourMin), setDayFiveMax(DayFiveMax), setDayFiveMin(DayFiveMin), setCompareDay2(compareDay2), setCompareDay3(compareDay3), setCompareDay4(compareDay4), setCompareDay5(compareDay5), setCompareDay6(compareDay6) 
       };
       fetchData();
