@@ -44,7 +44,7 @@ export default function Home() {
   const [searchCityValue, setSearchCityValue] = useState<string>()
 
   useEffect(() => {
-    global.navigator.geolocation.getCurrentPosition(success, error);
+    navigator.geolocation.getCurrentPosition(success, error);
     setFavorites(getlocalStorage())
   }, []);
 
