@@ -1,4 +1,12 @@
-import { IForecast } from "../Interfaces/Interfaces";
+import { ICityGet, IForecast } from "../Interfaces/Interfaces";
+let Apikey = process.env.NEXT_PUBLIC_API_KEY
+
+
+export const getData = async (longitude: number, latitude: number) => {
+  const promise = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${Apikey}&units=imperial&cnt=40`);
+  const data: IForecast = await promise.json();
+  return data;
+};
 
 export const GetMaxMin = (data: IForecast) => {
   const compareDay:  Date = new Date();
@@ -59,7 +67,7 @@ export const GetMaxMin = (data: IForecast) => {
 
   function StatusMode(statusArr: string[]) {
     const frequency:any = {};
-
+    
     statusArr.forEach((status) => {
       frequency[status] = (frequency[status] || 0) + 1;
     });
@@ -97,3 +105,12 @@ export const GetMaxMin = (data: IForecast) => {
 
   return {compareDay2, compareDay3, compareDay4, compareDay5, compareDay6, StatusDay1, StatusDay2, StatusDay3, StatusDay4, StatusDay5, currentMax, currentMin, DayOneMax, DayOneMin, DayTwoMax, DayTwoMin, DayThreeMax, DayThreeMin,  DayFourMax, DayFourMin, DayFiveMax, DayFiveMin, }
 };
+
+
+export const GetCity = async (city:string) =>{
+  const CityLookup = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${Apikey}`);
+  const cityName: ICityGet[] = await CityLookup.json()
+  let latitude = cityName[0].lat;
+  let longitude = cityName[0].lon;
+  return {longitude, latitude}
+}

@@ -71,3 +71,12 @@ export interface Wind {
     deg:   number;
     gust:  number;
 }
+export interface ICityGet {
+    name:        string;
+    local_names: { [key: number]: string };
+    lat:         number;
+    lon:         number;
+    country:     string;
+    state:       string;
+}
+

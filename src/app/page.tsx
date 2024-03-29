@@ -1,13 +1,14 @@
 "use client";
-let Apikey = process.env.NEXT_PUBLIC_API_KEY
 
-import NavBarComponent from "./Components/NavBarComponent";
+
 import Satr from "./Star.png";
 import { useEffect, useState } from "react";
 import { IForecast } from "./Interfaces/Interfaces";
 import Image from "next/image";
 import DayForcastComponent from "./Components/DayForcastComponent";
-import { GetMaxMin } from "./Services/DataServices";
+import { GetCity, GetMaxMin, getData } from "./Services/DataServices";
+import favStar from './FilledStar.png'
+
 
 export default function Home() {
   const [longitude, setLongitude] = useState<number>(0);
@@ -37,13 +38,10 @@ export default function Home() {
   const [compareDay4, setCompareDay4] = useState<Date>();
   const [compareDay5, setCompareDay5] = useState<Date>();
   const [compareDay6, setCompareDay6] = useState<Date>();
+  let [searchvalue, setSearchValue] = useState<string>();
+  const [fav, setFav] = useState<Boolean>(false)
   const [date, setdate] = useState<any>();
 
-  const getData = async (longitude: number, latitude: number) => {
-    const promise = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${Apikey}&units=imperial&cnt=40`);
-    const data: IForecast = await promise.json();
-    return data;
-  };
 
   useEffect(() => {
     global.navigator.geolocation.getCurrentPosition(success, error);
@@ -70,18 +68,42 @@ export default function Home() {
         );
         const { compareDay2, compareDay3, compareDay4, compareDay5, compareDay6, StatusDay1, StatusDay2, StatusDay3, StatusDay4, StatusDay5, currentMax, currentMin, DayOneMax, DayOneMin, DayTwoMax, DayTwoMin, DayThreeMax, DayThreeMin, DayFourMax, DayFourMin, DayFiveMax, DayFiveMin, } = GetMaxMin(weatherData);
         setStatusDay1(`https://openweathermap.org/img/wn/${StatusDay1}@2x.png`),
-          setStatusDay2(`https://openweathermap.org/img/wn/${StatusDay2}@2x.png`),
-          setStatusDay3(`https://openweathermap.org/img/wn/${StatusDay3}@2x.png`),
-          setStatusDay4(`https://openweathermap.org/img/wn/${StatusDay4}@2x.png`),
-          setStatusDay5(`https://openweathermap.org/img/wn/${StatusDay5}@2x.png`);
-          setCurrentDayMax(currentMax), setCurrentDayMin(currentMin), setDayOneMax(DayOneMax), setDayOneMin(DayOneMin), setDayTwoMax(DayTwoMax), setDayTwoMin(DayTwoMin), setDayThreeMax(DayThreeMax), setDayThreeMin(DayThreeMin), setDayFourMax(DayFourMax), setDayFourMin(DayFourMin), setDayFiveMax(DayFiveMax), setDayFiveMin(DayFiveMin); setCompareDay2(compareDay2), setCompareDay3(compareDay3), setCompareDay4(compareDay4), setCompareDay5(compareDay5), setCompareDay6(compareDay6); };
+        setStatusDay2(`https://openweathermap.org/img/wn/${StatusDay2}@2x.png`),
+        setStatusDay3(`https://openweathermap.org/img/wn/${StatusDay3}@2x.png`),
+        setStatusDay4(`https://openweathermap.org/img/wn/${StatusDay4}@2x.png`),
+        setStatusDay5(`https://openweathermap.org/img/wn/${StatusDay5}@2x.png`);
+        setCurrentDayMax(currentMax), setCurrentDayMin(currentMin), setDayOneMax(DayOneMax), setDayOneMin(DayOneMin), setDayTwoMax(DayTwoMax), setDayTwoMin(DayTwoMin), setDayThreeMax(DayThreeMax), setDayThreeMin(DayThreeMin), setDayFourMax(DayFourMax), setDayFourMin(DayFourMin), setDayFiveMax(DayFiveMax), setDayFiveMin(DayFiveMin); setCompareDay2(compareDay2), setCompareDay3(compareDay3), setCompareDay4(compareDay4), setCompareDay5(compareDay5), setCompareDay6(compareDay6); };
       fetchData();
     }
   }, [successBool]);
+  const handleSearch = async () =>{
+    setLatitude(0)
+    setLongitude(0)
+    const {longitude, latitude} = await GetCity(searchvalue? searchvalue : "")
+    setLatitude(latitude)
+    setLongitude(longitude)
+  }
+
+
+  const handleFav = () =>{
+    setFav(!fav)
+  }
 
   return (
     <>
-      <NavBarComponent />
+       <div className="grid grid-cols-3 pt-5 mb-10">
+      <div>
+
+      </div>
+      <div className="flex gap-8 justify-around ">
+        <h1 className="text-4xl">The Weather App</h1>
+        </div>
+        <div className="gap-4 pr-5 flex justify-end">
+          <input type="text" placeholder="Search a City" className="h-10 w-56 text-black" onChange={(e) => setSearchValue(e.target.value)} value={searchvalue} />
+          <button className="w-28 h-10 bg-black" onClick={handleSearch}>Go</button>
+        </div>
+      
+    </div>
       <div className="grid grid-cols-3 grid-rows-1">
         <div className="flex justify-center">
           <h1 className="text-4xl underline flex justify-center w-fit">
@@ -94,7 +116,7 @@ export default function Home() {
               {forecastData && forecastData.city.name}
             </h1>
             <p>
-              <Image width={50} height={50} src={Satr.src} alt="favStar" onClick={() => alert()} />
+              <Image width={50} height={50} src={!fav? Satr.src : favStar.src } alt="favStar" onClick={handleFav} />
             </p>
           </div>
           <div className="flex justify-center">
@@ -124,7 +146,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="container grid grid-cols-5 pl-10 mt-10">
+      <div className="grid grid-cols-5 justify-center mt-10">
         <DayForcastComponent date={compareDay2} Max={DayOneMax} Min={DayOneMin} Status={StatusDay1} />
         <DayForcastComponent date={compareDay3} Max={DayTwoMax} Min={DayTwoMin} Status={StatusDay2} />
         <DayForcastComponent date={compareDay4} Max={DayThreeMax} Min={DayThreeMin} Status={StatusDay3} />
