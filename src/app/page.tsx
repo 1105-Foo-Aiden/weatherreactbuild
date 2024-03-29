@@ -125,13 +125,13 @@ export default function Home() {
             Favorites
           </h1> 
           </div>
-          <div className="grid grid-cols-2 grid-flow-row pt-5 pr-10">
+          <div className="grid grid-cols-2 grid-flow-row pt-5 pr-10 gap-5">
             {
               favorites.map((city, id) =>{
                 return(
                   <div key={id}>
                       <div className="bg-blue-950 w-fit h-fit rounded-xl shadow-xl ml-10">
-                    <p className="text-3xl flex text-middle py-1 px-2">{city}</p>
+                    <p className="text-3xl flex text-middle py-1 px-2 ">{city}</p>
                     </div>
                   </div>
                 )
